@@ -6,7 +6,6 @@ import asyncHandler from 'express-async-handler';
 
 const router = Router();
 
-// router.get('/', productsController.getProducts)
 router.get(
     '/:id?',productsController.checkProductExists, 
     productsController.getProducts

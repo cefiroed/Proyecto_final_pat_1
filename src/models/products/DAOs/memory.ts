@@ -9,13 +9,13 @@ export class ProductsMemDAO implements ProductBaseClass {
   private products: ProductI[] = [];
 
   constructor() {
-    const mockData = [
-      { _id: '1', name: 'Terreno', price: 20000 },
-      { _id: '2', name: 'Finca', price: 250000 },
-      { _id: '3', name: 'Urbanización', price: 2600000 },
-    ];
+    // const mockData = [
+    //   { _id: '1', name: 'Terreno', price: 20000 },
+    //   { _id: '2', name: 'Finca', price: 250000 },
+    //   { _id: '3', name: 'Urbanización', price: 2600000 },
+    // ];
 
-    mockData.forEach((aMock) => this.products.push(aMock));
+    // mockData.forEach((aMock) => this.products.push(aMock));
   }
 
   findIndex(id: string) {

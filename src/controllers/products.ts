@@ -8,6 +8,11 @@ class Product {
     const id = req.params.id;
     const product = await productsAPI.getProducts(id);
 
+    if (product.length < 1) {
+      return res.status(400).json({
+        error: 'No products loaded',
+      });
+    }
     if (!product) {
       return res.status(404).json({
         msg: 'producto not found',
@@ -15,7 +20,7 @@ class Product {
     }
     next();
   }
-
+  
   async getProducts (req : Request, res : Response) {
     const { id } = req.params;
     const { name, description, codeproduct, url, price, stock } = req.query;
@@ -26,12 +31,12 @@ class Product {
         return res.status(404).json({
           data: 'OBJECT NOT FOUND',
         });
-
+      
       return res.json({
         data: result,
       });
     }
-
+    console.log("paso-2")
     const query: ProductQuery = {};
 
     if (name) query.name = name.toString();

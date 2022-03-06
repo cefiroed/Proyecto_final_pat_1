@@ -1,11 +1,13 @@
 import fs from 'fs';
+import moment from 'moment';
+import { v4 as uuidv4 } from "uuid";
 import {
   newProductCarI,
   ProductCarI,
-  ProductCarBaseClass,
-  ProductCarQuery,
+  ProductCarBaseClass
 } from '../productscar.interface';
 
+const timeStamp = moment().format();
 
 export class ProductsCarFSDAO implements ProductCarBaseClass {
   private products: ProductCarI[] = [];
@@ -51,19 +53,14 @@ export class ProductsCarFSDAO implements ProductCarBaseClass {
   }
 
   async add(data: newProductCarI): Promise<ProductCarI> {
-    if (!data.name || !data.description || !data.codeproduct || !data.url || 
-      !data.price || !data.stock) throw new Error('invalid data');
+    // if (!data.product) throw new Error('invalid data');
 
     await this.leer(this.nameFile);
 
     const newItem: ProductCarI = {
       _id: (this.products.length + 1).toString(),
-      name: data.name,
-      description: data.description,
-      codeproduct: data.codeproduct,
-      url: data.url,
-      price: data.price,
-      stock: data.stock
+      timestamp: timeStamp,
+      productid: uuidv4(),
     };
 
     this.products.push(newItem);
@@ -73,19 +70,19 @@ export class ProductsCarFSDAO implements ProductCarBaseClass {
     return newItem;
   }
 
-  async update(id: string, newProductData: newProductCarI): Promise<ProductCarI> {
-    await this.leer(this.nameFile);
+  // async update(id: string, newProductData: newProductCarI): Promise<ProductCarI> {
+  //   await this.leer(this.nameFile);
 
-    const index = await this.findIndex(id);
-    const oldProduct = this.products[index];
+  //   const index = await this.findIndex(id);
+  //   const oldProduct = this.products[index];
 
-    const updatedProduct: ProductCarI = { ...oldProduct, ...newProductData };
-    this.products.splice(index, 1, updatedProduct);
+  //   const updatedProduct: ProductCarI = { ...oldProduct, ...newProductData };
+  //   this.products.splice(index, 1, updatedProduct);
 
-    await this.guardar();
+  //   await this.guardar();
 
-    return updatedProduct;
-  }
+  //   return updatedProduct;
+  // }
 
   async delete(id: string): Promise<void> {
     await this.leer(this.nameFile);
@@ -95,29 +92,29 @@ export class ProductsCarFSDAO implements ProductCarBaseClass {
     await this.guardar();
   }
 
-  async query(options: ProductCarQuery): Promise<ProductCarI[]> {
-    await this.leer(this.nameFile);
-    type Conditions = (aProduct: ProductCarI) => boolean;
-    const query: Conditions[] = [];
+  // async query(options: ProductCarQuery): Promise<ProductCarI[]> {
+  //   await this.leer(this.nameFile);
+  //   type Conditions = (aProduct: ProductCarI) => boolean;
+  //   const query: Conditions[] = [];
 
-    if (options.name)
-      query.push((aProduct: ProductCarI) => aProduct.name == options.name);
+  //   if (options.name)
+  //     query.push((aProduct: ProductCarI) => aProduct.name == options.name);
 
-    if (options.description)
-      query.push((aProduct: ProductCarI) => aProduct.description == options.description);  
+  //   if (options.description)
+  //     query.push((aProduct: ProductCarI) => aProduct.description == options.description);  
     
-    if (options.codeproduct)
-      query.push((aProduct: ProductCarI) => aProduct.codeproduct == options.codeproduct);
+  //   if (options.codeproduct)
+  //     query.push((aProduct: ProductCarI) => aProduct.codeproduct == options.codeproduct);
 
-    if (options.url)
-      query.push((aProduct: ProductCarI) => aProduct.url == options.url);
+  //   if (options.url)
+  //     query.push((aProduct: ProductCarI) => aProduct.url == options.url);
 
-    if (options.price)
-      query.push((aProduct: ProductCarI) => aProduct.price == options.price);
+  //   if (options.price)
+  //     query.push((aProduct: ProductCarI) => aProduct.price == options.price);
     
-    if (options.stock)
-      query.push((aProduct: ProductCarI) => aProduct.stock == options.stock);
+  //   if (options.stock)
+  //     query.push((aProduct: ProductCarI) => aProduct.stock == options.stock);
 
-    return this.products.filter((aProduct) => query.every((x) => x(aProduct)));
-  }
+  //   return this.products.filter((aProduct) => query.every((x) => x(aProduct)));
+  // }
 }

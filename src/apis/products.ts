@@ -19,7 +19,6 @@ class prodAPI {
 
   async getProducts(id: string | undefined = undefined): Promise<ProductI[]> {
     if (id) return this.products.get(id);
-
     return this.products.get();
   }
 
