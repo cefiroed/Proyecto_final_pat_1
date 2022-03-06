@@ -63,7 +63,8 @@ class CarProduct {
     const product = await productsCarAPI.addProduct(body);
 
     res.json({
-      cart: product,
+      listCart: 'List the cart',
+      product,
     });
       
   }

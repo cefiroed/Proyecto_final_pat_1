@@ -30,6 +30,7 @@ class prodAPI {
   async deleteProduct(id: string) {
     return await this.products.delete(id);
   }
+
 }
   
 export const productsCarAPI = new prodAPI();

@@ -7,6 +7,7 @@ import {
   ProductCarBaseClass
 } from '../productscar.interface';
 
+
 const timeStamp = moment().format();
 
 export class ProductsCarFSDAO implements ProductCarBaseClass {
@@ -16,6 +17,7 @@ export class ProductsCarFSDAO implements ProductCarBaseClass {
   constructor(fileName: string) {
     
     this.nameFile = fileName;
+    this.products = [];
     this.guardar();
   }
 
@@ -29,8 +31,7 @@ export class ProductsCarFSDAO implements ProductCarBaseClass {
       JSON.stringify(this.products, null, '\t')
     );
   }
-
-
+  
 
   async findIndex(id: string): Promise<number> {
     await this.leer(this.nameFile);
@@ -57,11 +58,18 @@ export class ProductsCarFSDAO implements ProductCarBaseClass {
 
     await this.leer(this.nameFile);
 
+    // const newItem: ProductCarI = {
+    //   _id: (this.products.length + 1).toString(),
+    //   timestamp: timeStamp,
+    //   productid: uuidv4(),
+    // };
+
     const newItem: ProductCarI = {
       _id: (this.products.length + 1).toString(),
       timestamp: timeStamp,
-      productid: uuidv4(),
-    };
+      // product: (this.products.length +1).toString() ,
+      product: (this.products).toString(),
+    }
 
     this.products.push(newItem);
 
@@ -70,20 +78,6 @@ export class ProductsCarFSDAO implements ProductCarBaseClass {
     return newItem;
   }
 
-  // async update(id: string, newProductData: newProductCarI): Promise<ProductCarI> {
-  //   await this.leer(this.nameFile);
-
-  //   const index = await this.findIndex(id);
-  //   const oldProduct = this.products[index];
-
-  //   const updatedProduct: ProductCarI = { ...oldProduct, ...newProductData };
-  //   this.products.splice(index, 1, updatedProduct);
-
-  //   await this.guardar();
-
-  //   return updatedProduct;
-  // }
-
   async delete(id: string): Promise<void> {
     await this.leer(this.nameFile);
 
@@ -91,30 +85,6 @@ export class ProductsCarFSDAO implements ProductCarBaseClass {
     this.products.splice(index, 1);
     await this.guardar();
   }
-
-  // async query(options: ProductCarQuery): Promise<ProductCarI[]> {
-  //   await this.leer(this.nameFile);
-  //   type Conditions = (aProduct: ProductCarI) => boolean;
-  //   const query: Conditions[] = [];
-
-  //   if (options.name)
-  //     query.push((aProduct: ProductCarI) => aProduct.name == options.name);
-
-  //   if (options.description)
-  //     query.push((aProduct: ProductCarI) => aProduct.description == options.description);  
-    
-  //   if (options.codeproduct)
-  //     query.push((aProduct: ProductCarI) => aProduct.codeproduct == options.codeproduct);
-
-  //   if (options.url)
-  //     query.push((aProduct: ProductCarI) => aProduct.url == options.url);
-
-  //   if (options.price)
-  //     query.push((aProduct: ProductCarI) => aProduct.price == options.price);
-    
-  //   if (options.stock)
-  //     query.push((aProduct: ProductCarI) => aProduct.stock == options.stock);
-
-  //   return this.products.filter((aProduct) => query.every((x) => x(aProduct)));
-  // }
 }
+
+

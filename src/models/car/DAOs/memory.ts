@@ -5,6 +5,7 @@ import {
   ProductCarBaseClass,
 } from '../productscar.interface';
 
+let arrayProducts: any[] = [];
 const timeStamp = moment().format();
 
 export class ProductsCarMemDAO implements ProductCarBaseClass {
@@ -35,7 +36,8 @@ export class ProductsCarMemDAO implements ProductCarBaseClass {
     const newItem: ProductCarI = {
       _id: (this.products.length + 1).toString(),
       timestamp: timeStamp,
-      productid: uuidv4(),
+      // product: (typeof arrayProducts).toString(),
+      product: (this.products).toString(),
     };
 
     this.products.push(newItem);
