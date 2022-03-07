@@ -4,7 +4,7 @@ const timeStamp = moment().format();
 
 export interface newProductCarI {
   timestamp: string;
-  product: any[];
+  product: {_id};
 }
 
 export interface ProductCarI {

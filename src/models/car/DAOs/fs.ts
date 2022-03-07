@@ -11,14 +11,13 @@ import {
 const timeStamp = moment().format();
 
 export class ProductsCarFSDAO implements ProductCarBaseClass {
-  // private products: ProductCarI[] = [];
+  private products: ProductCarI[] = [];
   private nameFile: string;
-  private products;
 
   constructor(fileName: string) {
     
     this.nameFile = fileName;
-    // this.guardar();
+    this.guardar();
   }
 
   async leer(file: string): Promise<void> {
@@ -26,6 +25,7 @@ export class ProductsCarFSDAO implements ProductCarBaseClass {
   }
 
   async guardar(): Promise<void> {
+    // this.products = JSON.parse(await fs.promises.readFile(this.nameFile, 'utf-8'));
     await fs.promises.writeFile(
       this.nameFile,
       JSON.stringify(this.products, null, '\t')
@@ -67,11 +67,12 @@ export class ProductsCarFSDAO implements ProductCarBaseClass {
     const newItem: ProductCarI = {
       _id: (this.products.length + 1).toString(),
       timestamp: timeStamp,
-      product: (this.products).toString(),
+      product: JSON.stringify([], null),
+      // product: JSON.stringify({id_prod:(this.products.length + 1).toString()}, null),
     }
 
+    this.products.push(newItem);
     await this.guardar();
-
     return newItem;
   }
 
